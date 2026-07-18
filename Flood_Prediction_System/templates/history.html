@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+{% block title %}Prediction History | AquaGuard{% endblock %}
+
+{% block content %}
+<section class="section-padding" style="padding-top:3rem;">
+  <div class="container">
+    <div class="d-flex flex-wrap justify-content-between align-items-end mb-4 gap-3">
+      <div>
+        <p class="section-eyebrow mb-2">Activity Log</p>
+        <h1 class="section-title mb-0">Prediction History</h1>
+      </div>
+      <div class="d-flex gap-3">
+        <div class="text-center">
+          <div class="stat-number" style="font-size:1.4rem;">{{ stats.total }}</div>
+          <div class="stat-label">Total Readings</div>
+        </div>
+        <div class="text-center">
+          <div class="stat-number" style="font-size:1.4rem; color:#dc2626;">{{ stats.flood_count }}</div>
+          <div class="stat-label">Flood Alerts</div>
+        </div>
+        <div class="text-center">
+          <div class="stat-number" style="font-size:1.4rem; color:#16a34a;">{{ stats.safe_count }}</div>
+          <div class="stat-label">Safe Readings</div>
+        </div>
+      </div>
+    </div>
+
+    {% if records %}
+    <div class="table-responsive comparison-table">
+      <table class="table mb-0 align-middle">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Submitted</th>
+            <th>Annual Rain</th>
+            <th>Cloud Cover</th>
+            <th>Temp</th>
+            <th>Humidity</th>
+            <th>Seasonal Rain</th>
+            <th>Model</th>
+            <th>Probability</th>
+            <th>Verdict</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in records %}
+          <tr>
+            <td class="text-muted">{{ row.id }}</td>
+            <td>{{ row.predicted_at }}</td>
+            <td>{{ row.annual_rainfall }} mm</td>
+            <td>{{ row.cloud_cover }}%</td>
+            <td>{{ row.temperature }}&deg;C</td>
+            <td>{{ row.humidity }}%</td>
+            <td>{{ row.seasonal_rainfall }} mm</td>
+            <td>{{ row.model_used }}</td>
+            <td>{{ (row.probability * 100) | round(1) if row.probability is not none else '—' }}%</td>
+            <td>
+              {% if row.prediction == 1 %}
+                <span class="history-badge-flood">Flood Likely</span>
+              {% else %}
+                <span class="history-badge-safe">Low Risk</span>
+              {% endif %}
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="feature-card text-center py-5">
+      <h5 class="mb-2">No predictions logged yet</h5>
+      <p class="text-muted mb-3">Run a prediction to see it appear here with its full input history.</p>
+      <a href="{{ url_for('predict') }}" class="btn btn-predict">Make a Prediction</a>
+    </div>
+    {% endif %}
+  </div>
+</section>
+{% endblock %}

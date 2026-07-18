@@ -1,0 +1,74 @@
+{% extends "base.html" %}
+{% block title %}Prediction Result | AquaGuard{% endblock %}
+
+{% block content %}
+<section class="section-padding" style="padding-top:3rem;">
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-lg-9">
+
+        <div class="text-center mb-4">
+          <p class="section-eyebrow mb-2">Prediction Result</p>
+          <h1 class="section-title">
+            {% if result.prediction == 1 %}
+              Flood Risk Detected
+            {% else %}
+              No Significant Flood Risk
+            {% endif %}
+          </h1>
+          <p class="text-muted small">Generated on {{ prediction_date }}</p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-lg-7">
+            <div class="predict-card h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h5 class="mb-0">Risk Level: <span class="fw-bold">{{ result.risk_level }}</span></h5>
+                {% if result.prediction == 1 %}
+                  <span class="history-badge-flood">Flood Likely</span>
+                {% else %}
+                  <span class="history-badge-safe">Low Risk</span>
+                {% endif %}
+              </div>
+
+              <p class="text-muted small mb-1">Flood Probability</p>
+              <div class="risk-meter-track mb-1">
+                <div class="risk-meter-fill" style="width: {{ result.probability_percent }}%;"></div>
+              </div>
+              <p class="text-end fw-semibold mb-4">{{ result.probability_percent }}%</p>
+
+              <p class="text-muted small mb-1">Recommendation</p>
+              <p class="mb-4">{{ result.recommendation }}</p>
+
+              <div class="d-flex gap-3 flex-wrap">
+                {% if result.prediction == 1 %}
+                  <a href="{{ url_for('flood_alert') }}" class="btn btn-danger">View Emergency Guidance</a>
+                {% else %}
+                  <a href="{{ url_for('safe_page') }}" class="btn btn-success">View Preparedness Tips</a>
+                {% endif %}
+                <a href="{{ url_for('predict') }}" class="btn btn-outline-secondary">Run Another Prediction</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-lg-5">
+            <div class="feature-card h-100">
+              <h6 class="mb-3">Input Summary</h6>
+              <table class="table table-sm mb-0">
+                <tbody>
+                  <tr><td class="text-muted">Annual Rainfall</td><td class="text-end fw-semibold">{{ parsed_form.annual_rainfall }} mm</td></tr>
+                  <tr><td class="text-muted">Cloud Visibility</td><td class="text-end fw-semibold">{{ parsed_form.cloud_cover }}%</td></tr>
+                  <tr><td class="text-muted">Temperature</td><td class="text-end fw-semibold">{{ parsed_form.temperature }}&deg;C</td></tr>
+                  <tr><td class="text-muted">Humidity</td><td class="text-end fw-semibold">{{ parsed_form.humidity }}%</td></tr>
+                  <tr><td class="text-muted">Seasonal Rainfall (Jun-Sep)</td><td class="text-end fw-semibold">{{ parsed_form.seasonal_rainfall }} mm</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}

@@ -1,0 +1,56 @@
+{% extends "base.html" %}
+{% block title %}Flood Alert | AquaGuard{% endblock %}
+{% block body_class %}theme-alert{% endblock %}
+
+{% block content %}
+<section class="hero-section" style="padding: 4rem 0 6rem;">
+  <div class="container text-center position-relative">
+    <div class="pulse-ring d-inline-flex align-items-center justify-content-center rounded-circle mb-4"
+         style="width:88px;height:88px;background:rgba(255,255,255,0.15);">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none">
+        <path d="M12 3 2 21h20L12 3Z" stroke="white" stroke-width="1.7" stroke-linejoin="round"/>
+        <path d="M12 10v4M12 17h.01" stroke="white" stroke-width="1.7" stroke-linecap="round"/>
+      </svg>
+    </div>
+    <p class="hero-eyebrow">Emergency Guidance</p>
+    <h1 class="hero-headline mt-3">Flood Conditions Likely In Your Area</h1>
+    <p class="hero-sub mx-auto">The model has flagged a high probability of flooding based on the
+      weather readings you submitted. Treat this as a signal to prepare, and follow guidance from
+      your local disaster management authority.</p>
+  </div>
+</section>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="feature-card fade-in-section">
+          <h6 class="mb-3">Immediate Safety Instructions</h6>
+          <ul class="mb-0 ps-3">
+            <li class="mb-2">Move valuables, documents and electrical appliances to higher ground.</li>
+            <li class="mb-2">Switch off mains electricity and gas supply if water begins entering your premises.</li>
+            <li class="mb-2">Avoid walking or driving through moving flood water, even if it looks shallow.</li>
+            <li class="mb-2">Keep a battery-powered radio or charged phone on hand for official alerts.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="feature-card fade-in-section reveal-delay-1">
+          <h6 class="mb-3">Evacuation Preparedness</h6>
+          <ul class="mb-0 ps-3">
+            <li class="mb-2">Identify your nearest designated relief shelter or high-ground assembly point.</li>
+            <li class="mb-2">Pack an emergency bag with medicines, ID documents, water and non-perishable food.</li>
+            <li class="mb-2">Inform family members outside the affected area of your evacuation plan.</li>
+            <li class="mb-2">Follow evacuation orders from local authorities without delay.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ url_for('predict') }}" class="btn btn-outline-danger me-2">Check Another Reading</a>
+      <a href="{{ url_for('home') }}" class="btn btn-outline-secondary">Back to Home</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

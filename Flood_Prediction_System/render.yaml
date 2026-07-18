@@ -1,0 +1,21 @@
+# render.yaml
+# Render Blueprint - lets Render provision this service automatically via
+# "New +  Blueprint" pointing at this repo, instead of clicking through
+# manual web-service setup.
+
+services:
+  - type: web
+    name: aquaguard-flood-prediction
+    runtime: python
+    plan: free
+    region: oregon
+    buildCommand: "pip install -r requirements.txt && python train_model.py"
+    startCommand: "gunicorn --bind 0.0.0.0:$PORT --workers 2 --timeout 120 app:app"
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
+      - key: FLASK_DEBUG
+        value: "0"
+      - key: FLOOD_APP_SECRET_KEY
+        generateValue: true
+    healthCheckPath: /

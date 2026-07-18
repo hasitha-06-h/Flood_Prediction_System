@@ -1,0 +1,72 @@
+/*
+  animations.css
+  Kept apart from style.css on purpose - motion effects are the first
+  thing to strip out for a "reduced motion" pass, so isolating them here
+  means that can be done by dropping one stylesheet link.
+*/
+
+@keyframes fadeSlideUp {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes countPulse {
+  0%   { transform: scale(0.96); }
+  60%  { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+@keyframes rippleGlow {
+  0%   { box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.35); }
+  100% { box-shadow: 0 0 0 18px rgba(59, 130, 246, 0); }
+}
+
+.reveal-on-load {
+  animation: fadeSlideUp 0.7s ease both;
+}
+
+.reveal-delay-1 { animation-delay: 0.08s; }
+.reveal-delay-2 { animation-delay: 0.16s; }
+.reveal-delay-3 { animation-delay: 0.24s; }
+.reveal-delay-4 { animation-delay: 0.32s; }
+
+.floaty-icon {
+  animation: floatSlow 4.5s ease-in-out infinite;
+}
+
+.stat-number.counted {
+  animation: countPulse 0.5s ease;
+}
+
+.pulse-ring {
+  animation: rippleGlow 2.2s ease-out infinite;
+}
+
+.fade-in-section {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in-section.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal-on-load,
+  .floaty-icon,
+  .stat-number.counted,
+  .pulse-ring,
+  .fade-in-section {
+    animation: none !important;
+    transition: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+}

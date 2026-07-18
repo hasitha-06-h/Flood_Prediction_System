@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+{% block title %}Low Flood Risk | AquaGuard{% endblock %}
+{% block body_class %}theme-safe{% endblock %}
+
+{% block content %}
+<section class="hero-section" style="padding: 4rem 0 6rem;">
+  <div class="container text-center position-relative">
+    <div class="d-inline-flex align-items-center justify-content-center rounded-circle mb-4"
+         style="width:88px;height:88px;background:rgba(255,255,255,0.15);">
+      <svg width="42" height="42" viewBox="0 0 24 24" fill="none">
+        <path d="M4 12.5 9.5 18 20 6" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p class="hero-eyebrow">Preparedness Advisory</p>
+    <h1 class="hero-headline mt-3">No Significant Flooding Expected</h1>
+    <p class="hero-sub mx-auto">Based on the readings submitted, the model does not currently indicate
+      a high flood probability for this area. Conditions can still change quickly during monsoon
+      season, so it's worth staying prepared regardless.</p>
+  </div>
+</section>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="feature-card fade-in-section">
+          <h6 class="mb-3">General Preparedness Tips</h6>
+          <ul class="mb-0 ps-3">
+            <li class="mb-2">Keep a basic emergency kit ready regardless of current risk level.</li>
+            <li class="mb-2">Check that drainage around your property is clear of debris before monsoon season.</li>
+            <li class="mb-2">Save your local disaster helpline number in your phone.</li>
+            <li class="mb-2">Re-check the forecast periodically, especially after sustained heavy rainfall.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="feature-card fade-in-section reveal-delay-1">
+          <h6 class="mb-3">When to Re-Check</h6>
+          <ul class="mb-0 ps-3">
+            <li class="mb-2">If rainfall in your area increases noticeably over the next 24-48 hours.</li>
+            <li class="mb-2">If nearby rivers, dams or reservoirs approach warning levels.</li>
+            <li class="mb-2">If local authorities issue a weather advisory or watch for your district.</li>
+            <li class="mb-2">Before making travel plans through low-lying or flood-prone routes.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="text-center mt-5">
+      <a href="{{ url_for('predict') }}" class="btn btn-outline-success me-2">Check Another Reading</a>
+      <a href="{{ url_for('home') }}" class="btn btn-outline-secondary">Back to Home</a>
+    </div>
+  </div>
+</section>
+{% endblock %}

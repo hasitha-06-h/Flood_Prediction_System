@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}About the Model | AquaGuard{% endblock %}
+
+{% block content %}
+<section class="hero-section" style="padding: 4.5rem 0 6.5rem;">
+  <div class="container text-center position-relative">
+    <p class="hero-eyebrow">About This Project</p>
+    <h1 class="hero-headline mt-3">Methodology Behind the Prediction Engine</h1>
+    <p class="hero-sub mx-auto">AquaGuard was built to test whether classical machine learning models,
+      trained purely on historical meteorological readings, can offer a useful early signal for flood
+      risk without relying on complex hydrological simulation.</p>
+  </div>
+</section>
+
+<section class="section-padding">
+  <div class="container">
+    <div class="row g-4 mb-5">
+      <div class="col-md-6">
+        <div class="feature-card fade-in-section h-100">
+          <h5 class="mb-3">Problem Statement</h5>
+          <p class="text-muted mb-0">Traditional flood forecasting relies on hydrological models that
+            require dense sensor networks and specialist interpretation, which many smaller districts
+            simply don't have access to. This leaves a gap where basic weather station readings go
+            unused for early warning.</p>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="feature-card fade-in-section reveal-delay-1 h-100">
+          <h5 class="mb-3">Proposed Approach</h5>
+          <p class="text-muted mb-0">Train and benchmark four supervised classification algorithms on
+            a historical rainfall/temperature/humidity dataset, then deploy the strongest performer
+            behind a lightweight web interface any field officer can use directly.</p>
+        </div>
+      </div>
+    </div>
+
+    <div id="comparison" class="mb-5">
+      <p class="section-eyebrow mb-2">Model Comparison</p>
+      <h2 class="section-title mb-4">How Each Algorithm Performed</h2>
+
+      <div class="table-responsive comparison-table">
+        <table class="table mb-0">
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Accuracy</th>
+              <th>Precision</th>
+              <th>Recall</th>
+              <th>F1 Score</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Decision Tree</td><td>96.55%</td><td>100%</td><td>66.7%</td><td>80%</td><td></td></tr>
+            <tr><td>Random Forest</td><td>96.55%</td><td>100%</td><td>66.7%</td><td>80%</td><td></td></tr>
+            <tr><td>K-Nearest Neighbours</td><td>~95%</td><td>95%</td><td>62%</td><td>75%</td><td></td></tr>
+            <tr>
+              <td class="fw-semibold">XGBoost</td>
+              <td class="fw-semibold">96.55%</td>
+              <td>100%</td><td>66.7%</td><td>80%</td>
+              <td><span class="badge-best-model">Deployed</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="text-muted small mt-2">
+        Figures above reflect the reference benchmark run described in the project report. Your local
+        copy recalculates these every time <code>train_model.py</code> is run and writes the live
+        numbers to <code>reports/training_summary.txt</code> and the metadata shown on the homepage.
+      </p>
+    </div>
+
+    <div class="row align-items-center g-5 mb-5">
+      <div class="col-lg-6">
+        <p class="section-eyebrow mb-2">Why XGBoost</p>
+        <h2 class="section-title mb-3">Selected for Deployment</h2>
+        <ul class="ps-3 text-muted">
+          <li class="mb-2">Boosted trees correct each other's errors sequentially, generally giving
+            better generalisation than a single tree or a flat ensemble average.</li>
+          <li class="mb-2">Built-in regularisation reduces overfitting risk on a dataset this small
+            (115 rows).</li>
+          <li class="mb-2">It's a widely adopted industry standard for tabular classification tasks,
+            making the deployed model easier to justify and maintain.</li>
+        </ul>
+      </div>
+      <div class="col-lg-6">
+        <div class="feature-card">
+          <h6 class="mb-3">Currently Live in Production</h6>
+          <table class="table table-sm mb-0">
+            <tbody>
+              <tr><td class="text-muted">Model</td><td class="text-end fw-semibold">{{ metadata.model_name }}</td></tr>
+              <tr><td class="text-muted">Accuracy</td><td class="text-end fw-semibold">{{ metadata.accuracy if metadata.accuracy is not none else '—' }}%</td></tr>
+              <tr><td class="text-muted">Precision</td><td class="text-end fw-semibold">{{ metadata.precision if metadata.precision is not none else '—' }}%</td></tr>
+              <tr><td class="text-muted">Recall</td><td class="text-end fw-semibold">{{ metadata.recall if metadata.recall is not none else '—' }}%</td></tr>
+              <tr><td class="text-muted">F1 Score</td><td class="text-end fw-semibold">{{ metadata.f1_score if metadata.f1_score is not none else '—' }}%</td></tr>
+              <tr><td class="text-muted">Trained On</td><td class="text-end fw-semibold">{{ metadata.trained_on_rows }} rows</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-4">
+      <div class="col-md-4">
+        <div class="feature-card fade-in-section h-100">
+          <h6 class="mb-2">Data Preprocessing</h6>
+          <p class="text-muted small mb-0">Median imputation for missing values, IQR-based outlier
+            capping, and standard scaling applied before any model sees the data.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card fade-in-section reveal-delay-1 h-100">
+          <h6 class="mb-2">Feature Set</h6>
+          <p class="text-muted small mb-0">Annual rainfall, cloud visibility, temperature, humidity and
+            June-September seasonal rainfall - the five signals most correlated with flood outcomes in
+            the source dataset.</p>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="feature-card fade-in-section reveal-delay-2 h-100">
+          <h6 class="mb-2">Serving Layer</h6>
+          <p class="text-muted small mb-0">The trained model and scaler are serialised with Joblib and
+            loaded once at Flask startup, keeping prediction latency well under 50ms per request.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+{% endblock %}
