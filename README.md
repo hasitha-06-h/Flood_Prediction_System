@@ -159,7 +159,12 @@ restart.
 
 ## Screenshots
 
-*(Add screenshots of the Home, Predict, Result, Alert, Safe, About and History pages here.)*
+<img width="1831" height="811" alt="image" src="https://github.com/user-attachments/assets/ef12da70-6a0e-479d-8d1a-266a40edcdd8" />
+<img width="1861" height="897" alt="image" src="https://github.com/user-attachments/assets/1d436cfe-a806-41c0-a2d8-6ba82add8ddd" />
+<img width="1817" height="887" alt="image" src="https://github.com/user-attachments/assets/a0a7e66b-5490-4a85-b84e-1e974f45467f" />
+
+
+
 
 ## Future Scope
 
